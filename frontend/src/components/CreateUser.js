@@ -9,7 +9,6 @@ export default class CreateUser extends Component {
     }
     
     async componentDidMount() {
-        console.log('asdasdasd');
         this.getUsers();
        
     }
@@ -73,7 +72,7 @@ export default class CreateUser extends Component {
                     <ul className="list-group">
                         {
                             this.state.users.map(user => (
-                                <li className="list-group-item list-group-item-action" key={user._id} onDoubleClick={() => this.deleteUser(user._id)}>
+                                <li className="list-group-item list-group-item-action" key={user.id} onDoubleClick={() => this.deleteUser(user.id)}>
                                     {user.name}
                                 </li>
                             ))
