@@ -15,6 +15,7 @@ function App() {
       <Navigation />
       <div className="container p-4">
         
+        <Route path="/user" component={CreateUser} />
       </div>
     </Router>
   );
