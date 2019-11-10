@@ -2,7 +2,13 @@ module.exports = app => {
 
     const Users = app.db.models.Users;
   
-    app.route('/users')
+    app.use((req, res, next) => {
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+            res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+            res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+            next();
+        }).route('/users')
     .get((req, res) => {
       Users.findAll({})
         .then(result => res.json(result))
@@ -18,7 +24,13 @@ module.exports = app => {
         });
     });
 
-  app.route('/users/:id')
+  app.use((req, res, next) => {
+          res.header('Access-Control-Allow-Origin', '*');
+          res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+          res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+          res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+          next();
+      }).route('/users/:id')
     .get((req, res) => {
       Users.findOne({where: req.params})
         .then(result => {

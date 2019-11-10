@@ -4,33 +4,39 @@ import axios from 'axios'
 export default class CreateUser extends Component {
 
     state = {
-        username: '',
+        name: '',
         users: []
     }
-
+    
     async componentDidMount() {
+        console.log('asdasdasd');
         this.getUsers();
+       
     }
 
     getUsers = async () => {
         const res = await axios.get('http://localhost:4000/users');
+        
         this.setState({
             users: res.data
         });
-    }
 
-    onChangeUsername = e => {
+        
+    }
+    onChangename = e => {
         this.setState({
-            username: e.target.value
+            name: e.target.value
         })
     }
 
     onSubmit = async (e) => {
         e.preventDefault();
         await axios.post('http://localhost:4000/users', {
-            username: this.state.username
+            name: this.state.name,
+            password: "aaaaa",
+            email: "asdasdasdas"
         });
-        this.setState({ username: '' });
+        this.setState({ name: '' });
         this.getUsers();
     }
 
@@ -52,9 +58,9 @@ export default class CreateUser extends Component {
                             <div className="form-group">
                                 <input
                                     className="form-control"
-                                    value={this.state.username}
+                                    value={this.state.name}
                                     type="text"
-                                    onChange={this.onChangeUsername}
+                                    onChange={this.onChangename}
                                 />
                             </div>
                             <button type="submit" className="btn btn-primary">
@@ -68,7 +74,7 @@ export default class CreateUser extends Component {
                         {
                             this.state.users.map(user => (
                                 <li className="list-group-item list-group-item-action" key={user._id} onDoubleClick={() => this.deleteUser(user._id)}>
-                                    {user.username}
+                                    {user.name}
                                 </li>
                             ))
                         }
