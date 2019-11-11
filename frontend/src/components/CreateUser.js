@@ -8,8 +8,16 @@ const emailRegex = RegExp(
 );
 
 const formValid = ({ formErrors, ...rest }) => {
-    
+
     let valid = true;
+
+    console.log(`
+    --asda--
+    rest: ${JSON.stringify(rest)}`)
+
+    if (rest.name.length === 0 || rest.email.length === 0 || rest.password.length === 0) {
+        let valid = false;
+    }
 
     // validate form errors being empty
     Object.values(formErrors).forEach(val => {
@@ -20,7 +28,7 @@ const formValid = ({ formErrors, ...rest }) => {
     Object.values(rest).forEach(val => {
         val === null && (valid = false);
     });
-    
+
     return valid;
 };
 //fin validación 
@@ -33,7 +41,6 @@ export default class CreateUser extends Component {
         name: '',
         email: '',
         password: '',
-        users: [],
         formErrors: {
             name: "",
             email: "",
@@ -41,10 +48,6 @@ export default class CreateUser extends Component {
         }
     }
 
-    async componentDidMount() {
-        this.getUsers();
-
-    }
 
     handleSubmit = e => {
         e.preventDefault();
@@ -55,19 +58,18 @@ export default class CreateUser extends Component {
             Name: ${this.state.name}
             Email: ${this.state.email}
             Password: ${this.state.password}
-            usuarios: ${this.state.users}
+            resto: ${JSON.stringify(this.state)}
           `);
-          axios.post('http://localhost:4000/users', {
-            name: this.state.name,
-            password: this.state.password,
-            email: this.state.email
-        });
-        this.setState({
-            name: '',
-            email: '',
-            password: ''
-        });
-        this.getUsers();
+            axios.post('http://localhost:4000/users', {
+                name: this.state.name,
+                password: this.state.password,
+                email: this.state.email
+            });
+            this.setState({
+                name: '',
+                email: '',
+                password: ''
+            });
         } else {
             console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }
@@ -99,24 +101,10 @@ export default class CreateUser extends Component {
         this.setState({ formErrors, [name]: value }, () => console.log(this.state));
     };
 
-
-
-
-
-    getUsers = async () => {
-        const res = await axios.get('http://localhost:4000/users');
-
-        this.setState({
-            users: res.data
-        });
-    }
     render() {
         const { formErrors } = this.state;
 
         return (
-            <div>
-
-                <div className="wrapper">
                     <div className="form-wrapper">
                         <h1>Create Account</h1>
                         <form onSubmit={this.handleSubmit} noValidate>
@@ -168,8 +156,6 @@ export default class CreateUser extends Component {
                             </div>
                         </form>
                     </div>
-                </div>
-            </div>
-        )
+            )
+        }
     }
-}
