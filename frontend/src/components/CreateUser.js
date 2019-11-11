@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import "../App.css"
 
+import { Redirect } from 'react-router-dom';
+
 //validación de form
 const emailRegex = RegExp(
     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -60,11 +62,14 @@ export default class CreateUser extends Component {
             Password: ${this.state.password}
             resto: ${JSON.stringify(this.state)}
           `);
-            axios.post('http://localhost:4000/users', {
+            axios.post('http://localhost:4000/signup', {
                 name: this.state.name,
                 password: this.state.password,
                 email: this.state.email
-            });
+            }).then(res => {
+                console.log(res);
+                console.log(res.data);
+              });
             this.setState({
                 name: '',
                 email: '',
@@ -98,7 +103,7 @@ export default class CreateUser extends Component {
                 break;
         }
 
-        this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+        this.setState({ formErrors, [name]: value });
     };
 
     render() {
@@ -115,6 +120,7 @@ export default class CreateUser extends Component {
                             placeholder="Name"
                             type="text"
                             name="name"
+                            value= {this.state.name}
                             noValidate
                             onChange={this.handleChange}
                         />

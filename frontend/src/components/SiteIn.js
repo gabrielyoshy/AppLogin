@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
+import { Link, Redirect } from 'react-router-dom'
+
 export default class SiteIn extends Component {
-    
+
     state = {
         name: '',
         users: []
@@ -20,8 +22,8 @@ export default class SiteIn extends Component {
             users: res.data
         });
     }
-    
-    
+
+
     deleteUser = async (userId) => {
         const response = window.confirm('are you sure you want to delete it?');
         if (response) {
@@ -33,17 +35,32 @@ export default class SiteIn extends Component {
     render() {
         return (
             <div className="row">
-                <div className="col-md-8">
-                    <ul className="list-group">
-                        {
-                            this.state.users.map(user => (
-                                <li className="list-group-item list-group-item-action" key={user.id} onDoubleClick={() => this.deleteUser(user.id)}>
-                                    {user.name}
-                                </li>
+                <table className="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Password</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.users.map(user => (
+                            <tr>
+                                <th scope="row">{user.id}</th>
+                                <td>{user.name}</td>
+                                <td>{user.email}</td>
+                                <td>{user.password}</td>
+                                <td><button type="button" className="btn btn-danger" key={user.id} onClick={() => this.deleteUser(user.id)} >delete</button>
+                                </td>
+                            </tr>
                             ))
                         }
-                    </ul>
-                </div>
+                    </tbody>
+                </table>
+
+                {!this.props.autorizado && <Redirect to='/login' />}
             </div>
         )
     }

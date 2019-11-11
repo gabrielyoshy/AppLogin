@@ -87,7 +87,7 @@ module.exports = app => {
         const { email, password} = req.body;
         const user = await User.findOne({where: {email: email}});
         if(!user){
-            return res.status(404).send("The email doesn't exists");
+            return res.status(403).send("The email doesn't exists");
         }
 
         const validPassword = await validatePassword(password, user.password)
