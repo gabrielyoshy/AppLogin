@@ -7,7 +7,7 @@
     "build": "./node_modules/.bin/babel src --out-dir dist",
     "babel-node": "babel-node src/index.js",
     "dev": "nodemon --exec npm run babel-node",
-    "start": "node dist/index.js"
+    "start": "babel-node src/index.js"
   },
   "keywords": [],
   "author": "",

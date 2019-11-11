@@ -6,7 +6,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 module.exports = function (app) {
   // Settings
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', process.env.PORT || 4000);
   app.set('json spaces', 4); // middlewares
 
   app.use(_express["default"].json());
