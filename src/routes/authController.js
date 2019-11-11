@@ -15,6 +15,20 @@ module.exports = app => {
         return bcrypt.compare(password1, password2);
     }
 
+    function verifyToken (req, res, next){
+        const token = req.headers['x-access-token'];
+        if(!token){
+            return res.status(401).json({
+                auth: false,
+                message: 'no token provided'
+            });
+        }
+        const decoded = jwt.verify(token, 'secretToken');
+        req.userId = decoded.id;
+        next();
+
+    }
+
     app.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -49,19 +63,11 @@ module.exports = app => {
         res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
         next();
     }).route('/me')
-    .get(async (req, res, next) => {
+    .get(verifyToken, async (req, res, next) => {
 
-        const token = req.headers['x-access-token'];
-        if(!token){
-            return res.status(401).json({
-                auth: false,
-                message: 'no token provided'
-            });
-        }
-
-        const decoded = jwt.verify(token, 'secretToken');
         
-        const user = await User.findOne({where: {id: decoded.id}});
+        
+        const user = await User.findOne({where: {id: req.userId}});
 
         if(!user){
             return res.status(404).send('no user found');
@@ -95,6 +101,19 @@ module.exports = app => {
         });
 
         res.json({auth: true, token});
+    });
+
+
+    app.use((req, res, next) => {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+        res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+        next();
+    }).route('/logout')
+    .get(async (req, res, next) => {
+
+        res.status(200).send({ auth: false, token: null });
     });
 
     
