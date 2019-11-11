@@ -105,57 +105,57 @@ export default class CreateUser extends Component {
         const { formErrors } = this.state;
 
         return (
-                    <div className="form-wrapper">
-                        <h1>Create Account</h1>
-                        <form onSubmit={this.handleSubmit} noValidate>
-                            <div className="name">
-                                <label htmlFor="name">Name</label>
-                                <input
-                                    className={formErrors.name.length > 0 ? "error" : null}
-                                    placeholder="Name"
-                                    type="text"
-                                    name="name"
-                                    noValidate
-                                    onChange={this.handleChange}
-                                />
-                                {formErrors.name.length > 0 && (
-                                    <span className="errorMessage">{formErrors.name}</span>
-                                )}
-                            </div>
-                            <div className="email">
-                                <label htmlFor="email">Email</label>
-                                <input
-                                    className={formErrors.email.length > 0 ? "error" : null}
-                                    placeholder="Email"
-                                    type="email"
-                                    name="email"
-                                    noValidate
-                                    onChange={this.handleChange}
-                                />
-                                {formErrors.email.length > 0 && (
-                                    <span className="errorMessage">{formErrors.email}</span>
-                                )}
-                            </div>
-                            <div className="password">
-                                <label htmlFor="password">Password</label>
-                                <input
-                                    className={formErrors.password.length > 0 ? "error" : null}
-                                    placeholder="Password"
-                                    type="password"
-                                    name="password"
-                                    noValidate
-                                    onChange={this.handleChange}
-                                />
-                                {formErrors.password.length > 0 && (
-                                    <span className="errorMessage">{formErrors.password}</span>
-                                )}
-                            </div>
-                            <div className="createAccount">
-                                <button type="submit">Create Account</button>
-                                <small>Already Have an Account?</small>
-                            </div>
-                        </form>
+            <div className="form-wrapper">
+                <h1>Create Account</h1>
+                <form onSubmit={this.handleSubmit} noValidate>
+                    <div className="name">
+                        <label htmlFor="name">Name</label>
+                        <input
+                            className={formErrors.name.length > 0 ? "error" : null}
+                            placeholder="Name"
+                            type="text"
+                            name="name"
+                            noValidate
+                            onChange={this.handleChange}
+                        />
+                        {formErrors.name.length > 0 && (
+                            <span className="errorMessage">{formErrors.name}</span>
+                        )}
                     </div>
+                    <div className="email">
+                        <label htmlFor="email">Email</label>
+                        <input
+                            className={formErrors.email.length > 0 ? "error" : null}
+                            placeholder="Email"
+                            type="email"
+                            name="email"
+                            noValidate
+                            onChange={this.handleChange}
+                        />
+                        {formErrors.email.length > 0 && (
+                            <span className="errorMessage">{formErrors.email}</span>
+                        )}
+                    </div>
+                    <div className="password">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            className={formErrors.password.length > 0 ? "error" : null}
+                            placeholder="Password"
+                            type="password"
+                            name="password"
+                            noValidate
+                            onChange={this.handleChange}
+                        />
+                        {formErrors.password.length > 0 && (
+                            <span className="errorMessage">{formErrors.password}</span>
+                        )}
+                    </div>
+                    <div className="createAccount">
+                        <button type="submit">Create Account</button>
+                        <small>Already Have an Account?</small>
+                    </div>
+                </form>
+            </div>
             )
         }
     }
