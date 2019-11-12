@@ -21,8 +21,8 @@ In the package.json file you can see the dependencies used.
 
 The server will respond to the following requests:
 
-(Create user)
--POST http://localhost:4000/signup 
+### `(Create user)` 
+### `POST http://localhost:4000/signup` 
     It is necessary to send a Json with the following format:
     {
       "name": name,
