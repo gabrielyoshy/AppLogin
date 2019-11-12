@@ -22,7 +22,7 @@ In the package.json file you can see the dependencies used.
 The server will respond to the following requests:
 
 ### `(Create user)` 
-### `POST http://localhost:4000/signup` 
+### POST http://localhost:4000/signup 
     It is necessary to send a Json with the following format:
     {
       "name": name,
@@ -35,8 +35,8 @@ The server will respond to the following requests:
     Error 403: The email already exists
 
 
-(View user)
--GET http://localhost:4000/me 
+### `(View user)`
+### GET http://localhost:4000/me 
     
     As well as a Json Token (JWT authentication) in the header x-access-token
     (This Token is provided at the time of login and lasts one day)
@@ -47,8 +47,8 @@ The server will respond to the following requests:
 
 
 
-(Login)
-POST http://localhost:4000/signin 
+### `(Login)`
+### http://localhost:4000/signin 
     It is necessary to send a Json with the following format:
     {
       "email": email,
@@ -60,8 +60,8 @@ POST http://localhost:4000/signin
     Error 403: The email already exists.
     Error 401: User/password combination is incorrect.
 
-(See all users in the DB) -for practical purposes only
--GET http://localhost:4000/users 
+### `(See all users in the DB) -for practical purposes only`
+###  GET http://localhost:4000/users 
     It will show all the data saved in the DB from the browser. 
 
 
