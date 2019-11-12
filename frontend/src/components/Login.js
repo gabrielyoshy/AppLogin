@@ -1,26 +1,36 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { Link, Redirect } from 'react-router-dom'
 import "../App.css"
 
 
 
 export default class Login extends Component {
-    state = {
-        email: '',
-        password: '',
-        rta:{},
-        formErrors: {
-            name: "",
-            email: "",
-            password: ""
-        },
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+            login: false,
+            rta:{},
+            formErrors: {
+                name: "",
+                email: "",
+                password: ""
+            },
+        }
     }
 
-    handleSubmit = e => {
+    
+
+    handleSubmit = async e => {
         e.preventDefault();
         console.log(this.state);
-        
-         axios.post('http://localhost:4000/signin', {
+
+
+        try {
+            await axios.post('http://localhost:4000/signin', {
                 password: this.state.password,
                 email: this.state.email
             }).then(res => {
@@ -34,13 +44,17 @@ export default class Login extends Component {
                     rta: res.data
                 });
             });
-        console.log({message:'el resultado es', res: this.state.rta });    
-            
-
-
+          }
+          catch(err) {
+            alert('the email does not exist or the password is incorrect');
+          }
         
-
+        
+        console.log({message:'el resultado es', res: this.state.rta });    
+        this.setState({login: true });    
     };
+
+    
 
     handleChange = e => {
         e.preventDefault(); 
@@ -80,7 +94,7 @@ export default class Login extends Component {
                         <button type="submit">Login</button>
                     </div>
                 </form>
-                
+                {this.state.login && <Redirect to='/In' />}
             </div>
             )
         }

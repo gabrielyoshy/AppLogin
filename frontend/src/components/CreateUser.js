@@ -39,19 +39,22 @@ const formValid = ({ formErrors, ...rest }) => {
 
 export default class CreateUser extends Component {
 
-    state = {
-        name: '',
-        email: '',
-        password: '',
-        formErrors: {
-            name: "",
-            email: "",
-            password: ""
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+            rta:{},
+            formErrors: {
+                name: "",
+                email: "",
+                password: ""
+            },
         }
     }
 
 
-    handleSubmit = e => {
+    handleSubmit = async e => {
         e.preventDefault();
 
         if (formValid(this.state)) {
@@ -62,21 +65,29 @@ export default class CreateUser extends Component {
             Password: ${this.state.password}
             resto: ${JSON.stringify(this.state)}
           `);
-            axios.post('http://localhost:4000/signup', {
-                name: this.state.name,
-                password: this.state.password,
-                email: this.state.email
-            }).then(res => {
-                console.log(res);
-                console.log(res.data);
-              });
+            try{
+               await axios.post('http://localhost:4000/signup', {
+                    name: this.state.name,
+                    password: this.state.password,
+                    email: this.state.email
+                }).then(res => {
+                    console.log(res);
+                    console.log(res.data);
+                });
+                
+            }catch(err) {
+                alert('The email is already registered in the database');
+            }
+            
             this.setState({
                 name: '',
                 email: '',
                 password: ''
             });
+              
         } else {
             console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+            
         }
     };
 
@@ -113,7 +124,7 @@ export default class CreateUser extends Component {
             <div className="form-wrapper">
                 <h1>Create Account</h1>
                 <form onSubmit={this.handleSubmit} noValidate>
-                    <div className="name">
+                    <div className="email">
                         <label htmlFor="name">Name</label>
                         <input
                             className={formErrors.name.length > 0 ? "error" : null}
@@ -135,6 +146,7 @@ export default class CreateUser extends Component {
                             placeholder="Email"
                             type="email"
                             name="email"
+                            value= {this.state.email}
                             noValidate
                             onChange={this.handleChange}
                         />
@@ -149,6 +161,7 @@ export default class CreateUser extends Component {
                             placeholder="Password"
                             type="password"
                             name="password"
+                            value= {this.state.password}
                             noValidate
                             onChange={this.handleChange}
                         />

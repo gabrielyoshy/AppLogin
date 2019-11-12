@@ -5,13 +5,18 @@ import { Link, Redirect } from 'react-router-dom'
 
 export default class SiteIn extends Component {
 
-    state = {
-        name: '',
-        users: []
-    }
+
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            users: []
+            }    
+        }
 
     async componentDidMount() {
-        this.getUsers();
+        await this.getUsers();
 
     }
 

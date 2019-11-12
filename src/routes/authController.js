@@ -43,6 +43,13 @@ module.exports = app => {
             email: email,
             password: password
         };
+
+        const val_user = await User.findOne({where: {email: email}});
+        if(val_user){
+            return res.status(403).send("The email exists");
+        }
+        
+
         user.password = await encryptPassword(password);
         console.log(user);
         const aux = await User.create(user);
